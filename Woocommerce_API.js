@@ -57,6 +57,29 @@ const getAllProducts = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
     return data;
 }
 
+//--Create Webhook--
+const create_webhook = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET, name, topic, delivery_url) => {
+    const wcapi = await woocommerce_auth.woo_auth(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
+
+    if (wcapi == null){ return "" }  
+
+    const data = {
+        "name": name,
+        "topic": topic,
+        "delivery_url": delivery_url
+    };
+      
+    wcapi.post("webhooks", data)
+    .then((response) => {
+        console.log(response.data);
+        return response.data
+    })
+    .catch((error) => {
+        console.log(error.response.data);
+        return error.response.data
+    });
+}
+
 
 
 
