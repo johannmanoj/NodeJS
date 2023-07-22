@@ -20,8 +20,8 @@ const get_wcapi_object = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
 
 //--Retrieves Orders list--
 const getAllOrders = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
-    Woo = await get_wcapi_object(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
-    let allOrders = await Woo.get("orders")
+    wcapi = await get_wcapi_object(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
+    let allOrders = await wcapi.get("orders")
     .then((response) => {
         return response.data;
     })
@@ -45,7 +45,6 @@ const getAllProducts = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
             for(let i in response.data) {
                 data.push(response.data[i]);
             }
-            // console.log(response.data[0])
             return response.data;
         })
         .catch((error) => {
@@ -71,7 +70,6 @@ const create_webhook = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET, name, to
       
     wcapi.post("webhooks", data)
     .then((response) => {
-        console.log(response.data);
         return response.data
     })
     .catch((error) => {
