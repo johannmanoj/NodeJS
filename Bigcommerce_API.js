@@ -81,3 +81,23 @@ const delete_webhook = async (store_hash, access_token,webhook_id) => {
 
   return res
 }
+
+//--Retrieves a particular products metafields list--
+const get_product_metafields = async (store_hash,access_token, prodid) => {
+    const config = {
+        method: 'get',
+        url: `https://api.bigcommerce.com/stores/${store_hash}/v3/catalog/products/${prodid}/metafields`,
+        headers: { 'X-auth-token': access_token}
+    }
+  
+    let res = await axios(config)
+        .then((response) => {
+          // console.log(response.data.data);
+          return response.data.data
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          return error.response.data
+        });
+    return res
+}
