@@ -101,3 +101,43 @@ const get_product_metafields = async (store_hash,access_token, prodid) => {
         });
     return res
 }
+
+//--Updates the metafield value of a particular product's metafield--
+const update_product_metafield = async (store_hash,access_token, prodid, metafield_id, matafield_value) => {
+    var payload = { "description": matafield_value }
+
+    let res = await axios.put(`https://api.bigcommerce.com/stores/${store_hash}/v3/catalog/products/${prodid}/metafields/${metafield_id}`, payload,
+    { headers:{ "X-Auth-Token": access_token }})
+        .then((response) => {
+            // console.log(response.data);
+            return response.data
+        })
+        .catch((error) => {
+            console.log(error.response.data);
+            return error.response.data
+        });
+    return res
+}
+
+//--Creates a metafield for a particular product--
+const add_product_metafield = async (store_hash,access_token, prodid,  metafield_name, matafield_value) => {
+    var payload = {
+        "key": metafield_name,
+        "value": metafield_name,
+        "namespace": "attributes",
+        "permission_set": "app_only",
+        "description": matafield_value
+    }
+
+    let res = await axios.post(`https://api.bigcommerce.com/stores/${store_hash}/v3/catalog/products/${prodid}/metafields`, payload,
+    { headers:{ "X-Auth-Token": access_token }})
+        .then((response) => {
+            // console.log(response.data);
+            return response.data
+        })
+        .catch((error) => {
+            console.log(error.response.data);
+            return error.response.data
+        });
+    return res
+}
