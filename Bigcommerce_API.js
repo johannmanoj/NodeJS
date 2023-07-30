@@ -141,3 +141,23 @@ const add_product_metafield = async (store_hash,access_token, prodid,  metafield
         });
     return res
 }
+
+//--Retrieves the details of a particular category using its ID--
+const get_category_name = async (STORE_HASH, ACCESS_TOKEN, category_id) => {
+    const config = {
+        method: 'get',
+        url: `https://api.bigcommerce.com/stores/${STORE_HASH}/v3/catalog/categories/${category_id}`,
+        headers: { 'X-auth-token': ACCESS_TOKEN}
+    }
+  
+    let res = await axios(config)
+        .then((response) => {
+          // console.log(response.data.data);
+          return response.data.data
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          return error.response.data
+        });
+    return res
+}
