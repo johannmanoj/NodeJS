@@ -58,7 +58,7 @@ const getAllProducts = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
 
 //--Create Webhook--
 const create_webhook = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET, name, topic, delivery_url) => {
-    const wcapi = await woocommerce_auth.woo_auth(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
+    const wcapi = await get_wcapi_object(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
 
     if (wcapi == null){ return "" }  
 
@@ -78,7 +78,17 @@ const create_webhook = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET, name, to
     });
 }
 
-
+//--Retrieves list of webhooks--
+const get_webhooks_list = async (STORE_URL, CONSUMER_KEY, CONSUMER_SECRET) => {
+    const wcapi = await get_wcapi_object(STORE_URL, CONSUMER_KEY, CONSUMER_SECRET)
+    res = await wcapi.get("webhooks")
+    .then((response) => {
+        return response.data
+    })
+    .catch((error) => {
+        return error.response.data
+    });
+}
 
 
 module.exports = {};
